@@ -1,0 +1,111 @@
+<div class="container">
+  <form autocomplete="off" (ngSubmit)="salvar()" [formGroup]="formulario">
+    <div class="ui-g">
+      <div class="ui-g-12">
+        <h1>{{ editando ? 'Edição de' : 'Novo' }} Andamento</h1>
+      </div>
+
+      <div class="ui-g-6 ui-md-3 ui-fluid">
+        <label>Data Andamento</label>
+        <p-calendar name="dataAndamento" dateFormat="dd/mm/yy"
+          [inline]="false" [readonlyInput]="false" [showIcon]="false"
+          formControlName="dataAndamento"></p-calendar>
+
+        <app-message [control]="formulario.get('dataAndamento')" error="required"
+          text="Informe uma data do andamento"></app-message>
+      </div>
+
+      <div class="ui-g-6 ui-md-3 ui-fluid">
+        <label>Data Cadastro</label>
+        <p-calendar name="dataCadastro" dateFormat="dd/mm/yy"
+          [inline]="false" [readonlyInput]="false" [showIcon]="false"
+          formControlName="dataCadastro"></p-calendar>
+
+        <app-message [control]="formulario.get('dataCadastro')" error="required"
+          text="Informe uma data do cadastro"></app-message>
+      </div>
+
+      <div class="ui-g-6 ui-md-3 ui-fluid">
+        <label>Data Fechado</label>
+        <p-calendar name="dataFechado" dateFormat="dd/mm/yy"
+          [inline]="false" [readonlyInput]="false" [showIcon]="false"
+          formControlName="dataFechado"></p-calendar>
+      </div>
+
+      <div class="ui-g-12 ui-fluid">
+        <label>Descrição</label>
+        <textarea pInputTextarea rows="3" name="descricaoAndamento"
+          formControlName="descricaoAndamento"></textarea>
+      </div>
+
+      <div class="ui-g-12 ui-md-6 ui-fluid" formGroupName="tipoAndamento">
+        <label>Tipo do Andamento</label>
+        <p-dropdown name="tipoAndamento" [options]="tiposAndamento"
+          placeholder="Selecione" [autoWidth]="false"
+          formControlName="codigo"></p-dropdown>
+      </div>
+
+      <div class="ui-g-12 ui-md-6 ui-fluid" formGroupName="processo">
+        <label>Processo</label>
+        <p-dropdown name="processo" [options]="processos" placeholder="Selecione"
+          [autoWidth]="false" [filter]="true"
+          formControlName="codigo"></p-dropdown>
+      </div>
+
+      <div class="ui-g-12 ui-md-6 ui-fluid" formGroupName="advogadoResponsavel">
+        <label>Advogado Responsável</label>
+        <p-dropdown name="advogadoResponsavel" [options]="advogados" placeholder="Selecione"
+          [autoWidth]="false" [filter]="true"
+          formControlName="codigo"></p-dropdown>
+      </div>
+
+      <div class="ui-g-12 ui-md-6 ui-fluid" formGroupName="usuarioCadastro">
+        <label>Usuário Cadastro</label>
+        <p-dropdown name="usuarioCadastro" [options]="usuarios" placeholder="Selecione"
+          [autoWidth]="false" [filter]="true"
+          formControlName="codigo"></p-dropdown>
+      </div>
+
+      <div class="ui-g-12 ui-md-6 ui-fluid" formGroupName="usuarioFechamento">
+        <label>Usuário Fechamento</label>
+        <p-dropdown name="usuarioFechamento" [options]="usuarios" placeholder="Selecione"
+          [autoWidth]="false" [filter]="true"
+          formControlName="codigo"></p-dropdown>
+      </div>
+
+      <div class="ui-g-6 ui-g-offset-6 ui-md-2 ui-md-offset-10 ui-fluid"
+      *ngIf="!formulario.get('anexo').value">
+      <p-fileUpload name="anexo" mode="basic" auto="true" maxFileSize="100000000"
+        chooseLabel="Anexar" accept="image/*,application/*"
+        [url]="urlUploadAnexo"
+        (onBeforeSend)="antesUploadAnexo($event)"
+        (onUpload)="aoTerminarUploadAnexo($event)"
+        (onError)="erroUpload($event)"
+        [hidden]="uploadEmAndamento"></p-fileUpload>
+
+      <p-progressSpinner [hidden]="!uploadEmAndamento"
+        [style]="{ width: '25px', height: '25px' }"></p-progressSpinner>
+    </div>
+
+    <div class="ui-g-12" dir="rtl"
+      *ngIf="formulario.get('anexo').value">
+      <button pButton type="button" class="ui-button-danger"
+        icon="fa-close" pTooltip="Remover anexo" tooltipPosition="top"
+        (click)="removerAnexo()"></button>
+
+        <a target="_blank" pTooltip="Baixar anexo" tooltipPosition="top"
+        [href]="formulario.get('urlAnexo').value">{{ nomeAnexo }}</a>
+
+
+
+    </div>
+
+      <div class="ui-g-12">
+        <button pButton type="submit" label="Salvar" [disabled]="formulario.invalid || uploadEmAndamento"></button>
+        <button pButton type="button" label="Novo" class="ui-button-info"
+          (click)="novo()"></button>
+        <a routerLink="/andamentos">Voltar para a pesquisa</a>
+      </div>
+    </div>
+  </form>
+</div>

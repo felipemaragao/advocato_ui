@@ -1,0 +1,94 @@
+<div class="container">
+
+
+
+  <div class="ui-g">
+
+  <form autocomplete="off" (ngSubmit)="pesquisar()">
+  <div class="ui-g">
+    <div class="ui-g-12">
+     <h1>Usuários</h1>
+    </div>
+    <div class="ui-g-12 ui-fluid">
+      <label>Nome</label>
+      <input pInputText type="text" name="nome" [(ngModel)]="filtro.nome">
+    </div>
+
+    <div class="ui-g-12">
+      <button pButton  type="submit" label="Filtrar"></button>
+    </div>
+  </div>
+</form>
+</div>
+
+
+  <div class="ui-g">
+    <div class="ui-g-12">
+
+            <p-table [value]="usuarios" [responsive]="true"
+
+            [paginator]="true" [rows]="filtro.itensPorPagina"
+            [lazy]="true" [totalRecords]="totalRegistros"
+            (onLazyLoad)="aoMudarPagina($event)" #tabela>
+
+            <ng-template pTemplate="header">
+              <tr>
+                <th>Nome</th>
+                <th class="col-acoes-header-tree-button"></th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-usuario>
+            <tr>
+              <td>{{usuario.nome}}</td>
+
+              <td class="col-acoes-tree-button">
+                <a pButton  icon="fa fa-pencil" pTooltip="Editar" tooltipPosition="top"
+                [routerLink]="['/usuarios/', usuario.codigo]"></a>
+
+                <button pButton icon="fa fa-trash"
+                pTooltip="Excluir" tooltipPosition="top"
+                (click)="confirmarExclusao(usuario)"
+                [disabled]="!auth.temPermissao('ROLE_EXCLUIR_USUARIO')"></button>
+
+                <button pButton icon="fa-lock"
+                pTooltip="Resetar senha" tooltipPosition="top"
+                (click)="confirmarResetarSenha(usuario)"
+                [disabled]="!auth.temPermissao('ROLE_RESET_SENHA_USUARIO')"></button>
+
+              </td>
+            </tr>
+            </ng-template>
+
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                  <td colspan="5">
+                    Nenhum Usuario encontrado
+                  </td>
+                </tr>
+              </ng-template>
+
+        </p-table>
+    </div>
+
+    <div class="ui-g-12">
+      <a pButton label="Novo Usuário" routerLink="/usuarios/novo"></a>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+
+<p-dialog header="Resetando senha do usuário" [(visible)]="exbindoProgressBar"
+       modal="modal">
+<div class="card">
+  <h1>Aguarde, enviando senha por e-mail para o usuário.</h1>
+  <p-progressBar [value]="value" [showValue]="false" mode="indeterminate"></p-progressBar>
+</div>
+</p-dialog>
+
+
+

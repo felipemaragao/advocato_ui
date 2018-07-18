@@ -1,0 +1,24 @@
+<div class="layout-wrapper"
+                            [ngClass]="{'layout-menu-horizontal': menuMode === 'horizontal',
+                                        'layout-menu-popup': menuMode === 'popup',
+                                        'layout-menu-overlay': menuMode === 'overlay',
+                                        'layout-menu-static': menuMode === 'static',
+                                        'layout-menu-static-inactive': (menuMode == 'static' && menuActive === false)}"
+                                        (click)="onLayoutClick()">
+
+  <app-topbar *ngIf="exibirNavBar()"></app-topbar>
+
+    <div class="layout-content">
+        <router-outlet></router-outlet>
+    </div>
+
+    <app-footer></app-footer>
+
+
+<p-growl></p-growl>
+
+<p-confirmDialog header="Confirmação" icon="fa fa-question-circle"
+        acceptLabel="Sim" rejectLabel="Não">
+</p-confirmDialog>
+
+</div>

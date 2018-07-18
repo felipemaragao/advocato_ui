@@ -1,0 +1,42 @@
+<body class="login-body">
+
+    <div class="login-panel ui-fluid">
+        <form autocomplete="off" #f="ngForm">
+        <div class="ui-g">
+            <div class="ui-g-12 logo-container">
+                <img src="../../../assets/layout/images/logo-dark.png" alt="logo-dark" />
+                <h1>Login</h1>
+                <h2>ADVOCATO</h2>
+            </div>
+            <div class="ui-g-12">
+                <div class="input-wrapper">
+                    <input name="usuario" type="text"
+                      ngModel required #usuario
+                      autocomplete="off" placeholder="E-mail"
+                      class="ui-inputtext ui-widget">
+                </div>
+            </div>
+            <div class="ui-g-12">
+                <div class="input-wrapper">
+                    <input name="senha"  type="password"
+                     ngModel required #senha
+                     autocomplete="off" placeholder="Senha"
+                     class="ui-inputtext ui-widget">
+                </div>
+            </div>
+            <div class="ui-g-12 chkbox-container">
+                <input type="checkbox" id="remember-me" class="ui-chkbox ui-chkbox-box">
+                <label for="remember-me">Remember Me</label>
+            </div>
+            <div class="ui-g-12 button-container">
+                <button type="button"
+                [disabled]="!f.valid"
+                (click)="login(usuario.value, senha.value); senha.value='';"
+                class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only green-btn raised-btn rounded-btn" >
+                    <span class="ui-button-text ui-c">Login</span>
+                </button>
+            </div>
+        </div>
+        </form>
+    </div>
+</body>

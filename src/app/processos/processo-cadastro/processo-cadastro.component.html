@@ -1,0 +1,226 @@
+<div class="container">
+
+  <form autocomplete="off" (ngSubmit)="salvar(formulario)" [formGroup]="formulario">
+
+    <div class="ui-g">
+        <div class="ui-g-12">
+            <h1>Novo Processo</h1>
+          </div>
+        <p-fieldset legend="Dados do Processo" class="ui-g-12 ui-fluid">
+
+
+      <p-fieldset legend="Localização do Processo" class="ui-g-12 ui-fluid">
+
+
+            <div class="ui-g-4 ui-fluid" >
+              <label>Processo (NNNNNNN-DD.AAAA.JTR.OOOO)</label>
+              <p-inputMask name="numeroProcesso"  mask="9?999999-99.9999.9.99.9999"
+              formControlName="numeroProcesso"></p-inputMask>
+
+            </div>
+
+            <div class="ui-g-2 ui-md-2 ui-fluid">
+                <label>Externo</label>
+                <input pInputText type="text"  name="numeroExterno"
+                formControlName="numeroExterno">
+            </div>
+
+            <div class="ui-g-2 ui-md-2 ui-fluid">
+              <label>Data Ajuizamento</label>
+              <p-calendar name="dataAjuizamento" dateFormat="dd/mm/yy"
+              formControlName="dataAjuizamento"></p-calendar>
+
+            </div>
+
+            <div class="ui-g-12 ui-fluid">
+                <label></label>
+            </div>
+
+
+    <div class="ui-g-12 ui-md-3 ui-fluid" formGroupName='comarca'>
+      <label>Comarca</label>
+      <p-dropdown name="comarcaSelecionada" [options]="comarcas"
+      placeholder="Selecione"
+       [autoWidth]="false" formControlName="codigo"
+       [(ngModel)]="comarcaSelecionada"
+       (onChange)="carregarCompetencia()"
+       >
+      </p-dropdown>
+           <app-message [control]="formulario.get('comarca')" error="obrigatoriedade"
+           text="Informe uma Comarca"></app-message>
+     </div>
+
+
+    <div class="ui-g-12 ui-md-3 ui-fluid" formGroupName='competencia'>
+      <label>Competencia</label>
+      <p-dropdown name="competenciaSelecionada" [options]="competencias"
+      placeholder="Selecione"
+      [autoWidth]="false" formControlName="codigo"
+      [(ngModel)]="competenciaSelecionada"
+      (onChange)="carregarVaras()"
+       ></p-dropdown>
+           <app-message [control]="formulario.get('competencia')"
+           error="obrigatoriedade"
+           text="Informe uma Competência"></app-message>
+     </div>
+
+
+    <div class="ui-g-12 ui-md-3 ui-fluid" formGroupName='vara'>
+      <label>Vara</label>
+      <p-dropdown name="vara" [options]="varas"  placeholder="Selecione"
+       [autoWidth]="false" formControlName="codigo"></p-dropdown>
+
+     </div>
+
+
+     <div class="ui-g-4 ui-md-6 ui-fluid" formGroupName='tipoAcao'>
+        <label>Tipo da Ação</label>
+        <p-dropdown name="tipoAcao" [options]="tiposAcao"  placeholder="Selecione"
+         [autoWidth]="false" formControlName="codigo"></p-dropdown>
+
+             <app-message [control]="formulario.get('tipoAcao')" error="obrigatoriedade"
+             text="Informe um Tipo de Ação"></app-message>
+
+    </div>
+
+    <div class="ui-g-3 ui-md-3 ui-fluid" formGroupName='statusEscritorio'>
+        <label>Status</label>
+        <p-dropdown name="statusEscritorio" [options]="statusEscritorios"
+        placeholder="Selecione"
+         [autoWidth]="false" formControlName="codigo"></p-dropdown>
+
+             <app-message [control]="formulario.get('statusEscritorio')" error="obrigatoriedade"
+             text="Informe o status Escritorio"></app-message>
+      </div>
+
+
+      <div class="ui-g-3 ui-md-3 ui-fluid" formGroupName='faseProcesso'>
+        <label>Fase Processual</label>
+        <p-dropdown name="faseProcesso" [options]="fasesProcesso"  placeholder="Selecione"
+         [autoWidth]="false" formControlName="codigo"></p-dropdown>
+
+             <app-message [control]="formulario.get('faseProcesso')" error="obrigatoriedade"
+             text="Informe uma Fase para o Processo"></app-message>
+       </div>
+
+     </p-fieldset>
+
+
+
+       <p-fieldset legend="Valores do Processo" class="ui-g-12 ui-fluid">
+
+      <div class="ui-g-2 ui-md-2 ui-fluid" >
+          <label>Valor Ajuizado</label>
+          <input pInputText type="text" placeholder="0,00" currencyMask
+          [options]="{ prefix: '', thousands: '.', decimal: ',', allowNegative: false }"
+          formControlName="valorAjuizado" name="valorAjuizado">
+      </div>
+
+      <div class="ui-g-2 ui-md-2 ui-fluid" >
+          <label>Valor Provisionado</label>
+          <input pInputText type="text" placeholder="0,00" currencyMask
+          [options]="{ prefix: '', thousands: '.', decimal: ',', allowNegative: false }"
+          formControlName="valorProvisionado" name="valorProvisionado"
+          >
+      </div>
+
+      <div class="ui-g-2 ui-md-2 ui-fluid" >
+          <label>Valor Pago</label>
+          <input pInputText type="text" placeholder="0,00" currencyMask
+          [options]="{ prefix: '', thousands: '.', decimal: ',', allowNegative: false }"
+           name="valorPago" formControlName="valorPago">
+      </div>
+      </p-fieldset>
+
+      <p-fieldset legend="Partes Envolvidas" class="ui-g-12 ui-fluid">
+          <div class="ui-g-12 ui-md-6 ui-fluid" formGroupName='pessoaCliente'>
+            <label>Cliente</label>
+            <p-dropdown name="pessoaCliente" [options]="pessoasCliente"
+            placeholder="Selecione"
+            [autoWidth]="false" [filter]="true"
+              formControlName="codigo"></p-dropdown>
+
+              <app-message [control]="formulario.get('pessoaCliente')" error="obrigatoriedade"
+              text="Selecione um Cliente"></app-message>
+          </div>
+
+
+          <div class="ui-g-12 ui-md-3 ui-fluid" formGroupName='litigante'>
+              <label>Litigante Cliente</label>
+              <p-dropdown name="litigante" [options]="litigantes"
+              placeholder="Selecione" [autoWidth]="false" [filter]="true"
+              formControlName="codigo"></p-dropdown>
+
+              <app-message [control]="formulario.get('litigante')" error="obrigatoriedade"
+              text="Selecione um Litigante"></app-message>
+          </div>
+
+          <div class="ui-g-12 ui-md-6 ui-fluid" formGroupName='pessoaContraria'>
+              <label>Contrária</label>
+              <p-dropdown name="pessoaContraria" [options]="pessoasContraria"
+              placeholder="Selecione" [autoWidth]="false" [filter]="true"
+              formControlName="codigo"></p-dropdown>
+          </div>
+          <div class="ui-g-12">
+            <label></label>
+          </div>
+
+          <div class="ui-g-12 ui-md-6 ui-fluid" formGroupName='pessoaIndicacao'>
+              <label>Pessoa Indicação</label>
+              <p-dropdown name="pessoaIndicacao" [options]="pessoasIndicacao"
+              placeholder="Selecione" [autoWidth]="false" [filter]="true"
+              formControlName="codigo"></p-dropdown>
+          </div>
+        </p-fieldset>
+        <p-fieldset legend="Detalhamento do Processo" class="ui-g-12 ui-fluid">
+
+            <div class="ui-g-12 ui-fluid">
+                  <label>Resumo do Processo</label>
+                  <textarea [rows]="5" [cols]="120" pInputTextarea autoResize="autoResize"
+                  name="resumo" formControlName="resumo"></textarea>
+                  <app-message [control]="formulario.get('resumo')" error="tamanhoMinimo"
+                text="Mínimo de {{ formulario.get('resumo').errors?.tamanhoMinimo?.tamanho }} caracteres"></app-message>
+
+            </div>
+            </p-fieldset>
+
+     </p-fieldset>
+
+
+
+
+
+
+
+
+
+
+      <div class="ui-g-12 ui-md-6 ui-fluid" formGroupName='usuarioCadastro'>
+          <label>Usuario Cadastro</label>
+          <p-dropdown name="usuarioCadastro" [options]="usuarios"
+          placeholder="Selecione" [autoWidth]="false" [filter]="true"
+          formControlName="id"></p-dropdown>
+      </div>
+
+
+      <div class="ui-g-6 ui-md-3 ui-fluid">
+        <label>Data Cadastro</label>
+        <p-calendar name="dataCadastro" dateFormat="dd/mm/yy" disable="true"
+          [inline]="false" [readonlyInput]="false" [showIcon]="false"
+          formControlName="dataCadastro"></p-calendar>
+
+      </div>
+
+
+
+
+
+      <div class="ui-g-12">
+        <button pButton type="submit" label="Salvar" [disabled]="formulario.invalid"></button>
+        <button pButton type="button" label="Novo" class="ui-button-info" (click)="novo(formulario)"></button>
+        <a routerLink="/processos">Voltar para a pesquisa</a>
+      </div>
+
+    </div>
+  </form>
+</div>

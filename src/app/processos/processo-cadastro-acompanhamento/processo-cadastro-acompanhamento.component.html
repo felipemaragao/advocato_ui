@@ -1,0 +1,78 @@
+<div class="ui-g">
+  <div class="ui-g-12">
+    <button pButton label="Novo" icon="fa-plus" type="button"
+      class="ui-button-secondary" (click)="prepararNovoAndamento()"></button>
+  </div>
+
+  <div class="ui-g-12">
+    <p-table [value]="andamentos" [responsive]="true">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Processo</th>
+          <th>Tipo Andamento</th>
+          <th>Descrição</th>
+          <th class="col-acoes-header"></th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-andamento
+        let-rowIndex="rowIndex">
+        <tr>
+          <td>{{ andamento.processo.numero }}</td>
+          <td>{{ andamento.tipoAndamento.descricao }}</td>
+          <td>{{ andamento.descricao }}</td>
+          <td class="col-acoes">
+            <button pButton icon="fa-pencil" type="button"
+              pTooltip="Editar" tooltipPosition="top"
+              (click)="prepararEdicaoAndamento(andamento, rowIndex)"></button>
+
+            <button pButton icon="fa-trash" type="button"
+              pTooltip="Excluir" tooltipPosition="top"
+              (click)="removerAndamento(rowIndex)"></button>
+          </td>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="4">
+            Nenhum andamento cadastrado
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+
+
+<p-dialog [header]="editando ? 'Edição Andamento' : 'Novo Andamento'"
+            [(visible)]="exbindoFormularioAndamento"
+     modal="modal" *ngIf="andamento">
+  <form #frmContato="ngForm" (ngSubmit)="confirmarAndamento(frmAndamento)">
+    <div class="ui-g-12 ui-fluid">
+      <label>Data Andamento</label>
+
+      <input pInputText type="text" name="dataAndamento"
+        required [(ngModel)]="andamento.dataAndamento" #dataAndamento="ngModel"/>
+
+      <app-message [control]="dataAndamento" error="required" text="Informe a Data do Andamento"></app-message>
+    </div>
+
+    <div class="ui-g-12 ui-fluid">
+        <label>Descriçao</label>
+
+        <input pInputText type="descricao" name="descricao"
+          required  [(ngModel)]="andamento.descricao" #contatoEmail="ngModel"/>
+
+        <app-message [control]="andamentoDescricao" error="required" text="Informe uma descrição"></app-message>
+
+      </div>
+
+
+
+
+      <div class="ui-g-12">
+        <button pButton type="submit" label="Confirmar" [disabled]="frmContato.invalid"></button>
+      </div>
+  </form>
+</p-dialog>
