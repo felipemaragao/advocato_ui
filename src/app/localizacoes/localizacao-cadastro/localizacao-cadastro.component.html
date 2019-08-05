@@ -1,0 +1,53 @@
+<div class="container">
+  <form #f="ngForm" autocomplete="off" (ngSubmit)="salvar(f)">
+
+    <div class="ui-g">
+      <div class="ui-g-12">
+        <h1>{{editando ? 'Edição de ' : 'Nova '}} Localização</h1>
+      </div>
+
+      <div class="ui-g-12 ui-md-3 ui-fluid">
+        <label>Comarca</label>
+        <p-dropdown name="comarcaSelecionada" [options]="comarcas"
+        placeholder="Selecione"
+         [autoWidth]="false"
+         [(ngModel)]="localizacao.comarca.codigo" #comarca="ngModel" name="comarca"
+         ></p-dropdown>
+
+       </div>
+
+
+      <div class="ui-g-12 ui-md-3 ui-fluid">
+        <label>Competencia</label>
+        <p-dropdown name="competenciaSelecionada" [options]="competencias"
+        placeholder="Selecione"
+        [autoWidth]="false"
+        [(ngModel)]="localizacao.competencia.codigo" #competencia="ngModel" name="competencia">
+        </p-dropdown>
+       </div>
+
+       <div class="ui-g-12 ui-md-3 ui-fluid">
+        <label>Vara</label>
+        <p-dropdown name="varaSelecionada" [options]="varas"
+        placeholder="Selecione"
+        [autoWidth]="false"
+        [(ngModel)]="localizacao.vara.codigo" #competencia="ngModel" name="vara">
+        </p-dropdown>
+       </div>
+
+
+
+
+      <div class="ui-g-12">
+        <button pButton type="submit" label="Salvar" [disabled]="f.invalid"></button>
+        <button pButton type="button" label="Nova" class="ui-button-info"
+          (click)="nova(f)"></button>
+
+        <a routerLink="/localizacoes">Voltar para a pesquisa</a>
+      </div>
+    </div>
+
+  </form>
+</div>
+
+

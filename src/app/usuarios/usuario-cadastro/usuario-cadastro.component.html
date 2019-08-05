@@ -1,0 +1,56 @@
+<div class="container">
+  <form autocomplete="off" (ngSubmit)="salvar(formulario)" [formGroup]="formulario">
+
+    <div class="ui-g">
+      <div class="ui-g-12">
+        <h1>{{editando ? 'Edição de ' : 'Novo '}} Usuário</h1>
+      </div>
+
+
+      <div class="ui-g-12 ui-fluid">
+        <label>Nome</label>
+        <input pInputText type="text"  formControlName="nome" name="nome">
+        <app-message [control]="formulario.get('nome')" error="required"
+              text="Nome obrigatório"></app-message>
+      </div>
+<div formGroupName="emailGroup">
+      <div class="ui-g-12 ui-fluid">
+        <label>E-mail</label>
+        <input pInputText type="text"  formControlName="email" name="email">
+        <app-message [control]="formulario.get('email')" error="obrigatoriedade"
+              text="E-mail obrigatório"></app-message>
+      </div>
+
+      <div class="ui-g-12 ui-fluid">
+        <label>Confirmar E-mail</label>
+        <input pInputText type="text"  formControlName="confirmarEmail" name="confirmarEmail">
+        <app-message [control]="formulario.get('confirmarEmail')" error="childrenEqual"
+             text="Confirmação de e-mail inválida"></app-message>
+
+      </div>
+</div>
+
+
+
+      <div class="ui-g-12">
+        <button pButton type="submit" label="Salvar" [disabled]="formulario.invalid"></button>
+        <button pButton type="button" label="Novo" class="ui-button-info" (click)="novo(formulario)"></button>
+        <a routerLink="/usuarios">Voltar para a pesquisa</a>
+      </div>
+
+    </div>
+
+  </form>
+</div>
+
+
+<p-dialog header="Criando usuário" [(visible)]="exbindoProgressBar"
+       modal="modal">
+<div class="card">
+  <h1>Aguarde, enviando senha por e-mail para o usuário.</h1>
+  <p-progressBar [showValue]="false" mode="indeterminate"></p-progressBar>
+</div>
+</p-dialog>
+
+
+

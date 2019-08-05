@@ -1,0 +1,29 @@
+<div class="container">
+  <form #f="ngForm" autocomplete="off" (ngSubmit)="salvar(f)">
+
+    <div class="ui-g">
+      <div class="ui-g-12">
+        <h1>{{editando ? 'Edição de ' : 'Novo '}} Fase do Processo</h1>
+      </div>
+
+
+      <div class="ui-g-12 ui-fluid">
+        <label>Nome</label>
+        <input pInputText type="text" [(ngModel)]="faseProcesso.nome"
+              name="nome" #descricaoAutor="ngModel">
+      </div>
+
+
+      <div class="ui-g-12">
+        <button pButton type="submit" label="Salvar" [disabled]="f.invalid"></button>
+        <button pButton type="button" label="Nova" class="ui-button-info"
+          (click)="nova(f)"></button>
+
+        <a routerLink="/fasesProcesso">Voltar para a pesquisa</a>
+      </div>
+    </div>
+
+  </form>
+</div>
+
+

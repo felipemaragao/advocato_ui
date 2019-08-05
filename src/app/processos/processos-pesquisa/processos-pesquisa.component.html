@@ -1,0 +1,49 @@
+<div class="container">
+    <div class="ui-g">
+    <form autocomplete="off" (ngSubmit)="pesquisar()">
+      <div class="ui-g-12">
+       <h1>Processos</h1>
+      </div>
+      <div class="ui-g-12 ui-fluid">
+        <label>Cliente:</label>
+        <input pInputText type="text" name="cliente" [(ngModel)]="filtro.cliente">
+      </div>
+      <div class="ui-g-12 ui-fluid">
+          <label>Contrária:</label>
+          <input pInputText type="text" name="contraria" [(ngModel)]="filtro.contraria">
+        </div>
+      <div class="ui-g-12 ui-fluid">
+          <label>N. Processo:</label>
+          <input pInputText type="text" name="numeroProcesso" [(ngModel)]="filtro.numeroProcesso">
+        </div>
+
+        <div class="ui-g-12 ui-fluid">
+            <label>N. Externo:</label>
+            <input pInputText type="text" name="numeroExterno" [(ngModel)]="filtro.numeroExterno">
+          </div>
+      <div class="ui-g-12">
+        <label style="display: block">Ajuizado em</label>
+        <input pInputText type="text" name="dataAjuizadoDe" [(ngModel)]="filtro.dataAjuizadoDe" style="width: 95px">
+        <label>até</label>
+        <input pInputText type="text" name="dataAjuizadoAte" [(ngModel)]="filtro.dataAjuizadoAte" style="width: 95px">
+      </div>
+      <div class="ui-g-12">
+        <button pButton  type="submit" label="Filtrar"></button>
+      </div>
+    </form>
+    </div>
+
+    <div class="ui-g">
+        <div class="ui-g-12">
+              <app-processos-grid [processos]="processos"> </app-processos-grid>
+        </div>
+    </div>
+
+      <div class="ui-g-12">
+        <a pButton label="Novo Processo" routerLink="/processos/novo"></a>
+      </div>
+
+
+  </div>
+
+
